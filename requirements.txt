@@ -1,0 +1,16 @@
+# Flask
+Flask
+
+# Flask extensions
+Flask-Babel
+Flask-Login
+Flask-Mail
+Flask-SQLAlchemy
+Flask-WTF
+
+# Python packages
+passlib
+bcrypt
+pycryptodome==3.4.3
+speaklater
+
