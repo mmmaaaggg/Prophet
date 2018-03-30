@@ -5,6 +5,7 @@ from flask_user.forms import LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 from prophet_app.forecast import forecast_blueprint
+from prophet_app import db
 from flask import Blueprint
 
 
@@ -20,7 +21,10 @@ def create_app(config_path):
     app.config.from_object(config_path)
 
     # Initialize Flask extensions
-    db = SQLAlchemy(app)                            # Initialize Flask-SQLAlchemy
+    # db = SQLAlchemy(app)                            # Initialize Flask-SQLAlchemy
+    # reference : http://flask-sqlalchemy.pocoo.org/2.3/contexts/
+    app.app_context().push()
+    db.init_app(app)
     mail = Mail(app)                                # Initialize Flask-Mail
 
     # Define the User data model. Make sure to add flask_user UserMixin !!!
