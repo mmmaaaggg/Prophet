@@ -8,22 +8,12 @@ from prophet_app.controllers.forecast import forecast_blueprint
 from flask import Blueprint
 
 
-business = Blueprint('business', __name__)
-
-
-@business.route('/prophet')
-def go_prophet():
-    print('get request')
-    return render_template('business/submit_prophet.html')
-
-
 def create_app(config_path):
     app = Flask(__name__, static_url_path='')
     app.debug = True
     app.secret_key = 'M!@#$@#$%#$%alksdjf;lkj'
 
-    # from prophet_app.business import business
-    app.register_blueprint(business, url_prefix='/business')
+    # 添加 BluePrint
     app.register_blueprint(forecast_blueprint, url_prefix='/forecast')
 
     # app.config.from_object(__name__+'.ConfigClass')

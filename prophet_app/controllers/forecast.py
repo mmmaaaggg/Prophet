@@ -12,7 +12,10 @@ from flask import Blueprint, render_template
 import logging
 
 logger = logging.getLogger()
-forecast_blueprint = Blueprint('auth', __name__, template_folder=path.join(path.pardir, 'templates', 'forecaset'))
+# __name__.split('.')[-1] 相当于 forecast 文件名
+# 目标文件默认使用 templates/forecast 下的文件
+file_name = __name__.split('.')[-1]
+forecast_blueprint = Blueprint(file_name, __name__, template_folder=path.join(path.pardir, 'templates', file_name))
 
 
 @forecast_blueprint.route('/prophet')
