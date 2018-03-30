@@ -4,7 +4,7 @@ from flask_mail import Mail
 from flask_user.forms import LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
-from prophet_app.controllers.forecast import forecast_blueprint
+from prophet_app.forecast import forecast_blueprint
 from flask import Blueprint
 
 
