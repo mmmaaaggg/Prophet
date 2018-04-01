@@ -15,7 +15,7 @@ class CompInfo(db.Model):
     """
     组合信息
     """
-    __tablename__ = 'CompInfo'
+    __tablename__ = 'comp_info'
     comp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
     create_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -33,6 +33,7 @@ class CompData(db.Model):
     """
     每日的投资组合变化信息
     """
+    __tablename__ = 'comp_data'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     comp_id = db.Column(db.Integer, db.ForeignKey("CompInfo.comp_id"))
     wind_code = db.Column(db.String(20))
@@ -44,6 +45,7 @@ class DailyCompareResult(db.Model):
     """
     每日组合预期与实际比较结果
     """
+    __tablename__ = 'daily_compare_result'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     exp_comp_id = db.Column(db.Integer, db.ForeignKey('CompInfo.comp_id'))
     real_comp_id = db.Column(db.Integer, db.ForeignKey('CompInfo.comp_id'))
@@ -55,3 +57,18 @@ class DailyCompareResult(db.Model):
     shift_value = db.Column(db.Float)
     shift_rate = db.Column(db.Float)
 
+
+class WindStockInfo(db.Model):
+    """
+    股票基本信息
+    """
+    __tablename__ = 'wind_stock_info'
+    wind_code = db.Column(db.String(20), primary_key=True)
+    trade_code = db.Column(db.String(20))
+    sec_name = db.Column(db.String(20))
+    ipo_date = db.Column(db.Date)
+    delist_date = db.Column(db.Date)
+    exch_city = db.Column(db.String(20))
+    exch_eng = db.Column(db.String(20))
+    mkt = db.Column(db.String(20))
+    prename = db.Column(db.String(2000))
