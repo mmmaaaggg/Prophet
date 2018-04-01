@@ -20,3 +20,5 @@ print('file_name:', __name__)
 forecast_blueprint = Blueprint(file_name, __name__, template_folder=path.join(path.pardir, 'templates', file_name))
 
 from prophet_app.forecast.views import *
+forecast_blueprint.add_url_rule('/create/', view_func=ProphetCreateOrEdit.as_view('prophet_create'))
+forecast_blueprint.add_url_rule('/edit/<int:id_>/', view_func=ProphetCreateOrEdit.as_view('prophet_edit'))

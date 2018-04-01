@@ -3,8 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>提交预测</title>
+        <!--easy pie chart-->
+    <link href="js/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!--vector maps -->
+    <link rel="stylesheet" href="js/vector-map/jquery-jvectormap-1.1.1.css">
+
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+
+    <!--switchery-->
+    <link href="js/switchery/switchery.min.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!--jquery-ui-->
+    <link href="js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
+
+    <!--iCheck-->
+    <link href="js/icheck/skins/all.css" rel="stylesheet">
+
+    <link href="css/owl.carousel.css" rel="stylesheet">
+
+
+    <!--common style-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 <body>
-提交预测
+<div class="wrapper">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                新增预言
+            </header>
+            <div class="panel-body">
+                <form class="form-horizantal" method="post" action="#" role="form">
+                    <div class="form-group">
+                        <!--<label for="name" class="col-lg-2 control-label">名称</label>-->
+                        {{ form.name.label(class_="col-lg-2 control-label") }}
+                        <div class="col-lg-10">
+                            {{ form.name(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!--<label for="name" class="col-lg-2 control-label">名称</label>-->
+                        {{ form.calc_method.label(class_="col-lg-2 control-label") }}
+                        <div class="col-lg-10">
+                            {{ form.calc_method(class_="form-control") }}
+                        </div>
+                    </div>
+                    <input class="form-control" type="submit">
+                </form>
+            </div>
+        </section>
+    </div>
+
+</div>
+
 </body>
 </html>

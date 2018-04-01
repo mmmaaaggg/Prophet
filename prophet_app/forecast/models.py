@@ -7,7 +7,7 @@
 @contact : mmmaaaggg@163.com
 @desc    : 
 """
-
+from datetime import datetime
 from prophet_app import db, User
 
 
@@ -18,9 +18,15 @@ class CompInfo(db.Model):
     __tablename__ = 'CompInfo'
     comp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
-    create_user_id = db.Column(db.Integer, db.ForeignKey())
-    create_dt = db.Column(db.DateTime, server_default)
+    create_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    create_dt = db.Column(db.DateTime, default=datetime.now())
     calc_method = db.Column(db.String(20))
+
+    def __init__(self, name=None, calc_method=None, create_user_id=None):
+        self.name = name
+        self.create_user_id = create_user_id
+        self.calc_method = calc_method
+        # self.create_dt = create_dt if create_dt else datetime.now()
 
 
 class CompData(db.Model):
