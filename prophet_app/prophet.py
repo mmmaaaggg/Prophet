@@ -5,8 +5,7 @@ from flask_user.forms import LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 from prophet_app.forecast import forecast_blueprint
-from prophet_app import db
-from flask import Blueprint
+from prophet_app import db, User
 
 
 def create_app(config_path):
@@ -27,22 +26,23 @@ def create_app(config_path):
     db.init_app(app)
     mail = Mail(app)                                # Initialize Flask-Mail
 
+    # 迁移到 __init__ 文件
     # Define the User data model. Make sure to add flask_user UserMixin !!!
-    class User(db.Model, UserMixin):
-        id = db.Column(db.Integer, primary_key=True)
-
-        # User authentication information
-        username = db.Column(db.String(50), nullable=False, unique=True)
-        password = db.Column(db.String(255), nullable=False, server_default='')
-
-        # User email information
-        email = db.Column(db.String(255), nullable=False, unique=True)
-        confirmed_at = db.Column(db.DateTime())
-
-        # User information
-        active = db.Column('is_active', db.Boolean(), nullable=False, server_default='0')
-        first_name = db.Column(db.String(100), nullable=False, server_default='')
-        last_name = db.Column(db.String(100), nullable=False, server_default='')
+    # class User(db.Model, UserMixin):
+    #     id = db.Column(db.Integer, primary_key=True)
+    #
+    #     # User authentication information
+    #     username = db.Column(db.String(50), nullable=False, unique=True)
+    #     password = db.Column(db.String(255), nullable=False, server_default='')
+    #
+    #     # User email information
+    #     email = db.Column(db.String(255), nullable=False, unique=True)
+    #     confirmed_at = db.Column(db.DateTime())
+    #
+    #     # User information
+    #     active = db.Column('is_active', db.Boolean(), nullable=False, server_default='0')
+    #     first_name = db.Column(db.String(100), nullable=False, server_default='')
+    #     last_name = db.Column(db.String(100), nullable=False, server_default='')
 
     # Create all database tables
     db.create_all()
@@ -50,7 +50,6 @@ def create_app(config_path):
     # Setup Flask-User
     db_adapter = SQLAlchemyAdapter(db, User)        # Register the User model
     user_manager = UserManager(db_adapter, app)     # Initialize Flask-User
-
 
     @app.route('/')
     def hello_world():
