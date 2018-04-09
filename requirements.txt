@@ -1,3 +1,4 @@
+Pandas==0.22.0
 # Flask
 Flask==0.10.1
 

@@ -13,6 +13,9 @@
 :: pip install C:\IDE\wheels\passlib-1.7.1-py2.py3-none-any.whl -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install -r requirements.txt -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 pip install Flask==0.10.1 -i http://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn
+pip install d:\Softwares\DevTools\Python\numpy-1.14.2-cp35-none-win_amd64.whl
+pip install d:\Softwares\DevTools\Python\pandas-0.22.0-cp35-cp35m-win_amd64.whl
+pip install d:\Softwares\DevTools\Python\pandas-0.22.0-cp35-cp35m-win_amd64.whl
 
 pip install Flask==0.10.1 -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 pip install Flask==0.10.1 -i https://pypi.tuna.tsinghua.edu.cn/simple

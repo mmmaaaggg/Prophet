@@ -8,10 +8,10 @@ from prophet_app.forecast import forecast_blueprint
 from prophet_app import db, User
 
 
-def create_app(config_path):
+def create_app(config_path, db):
     app = Flask(__name__, static_url_path='')
     app.debug = True
-    app.secret_key = 'M!@#$@#$%#$%alksdjf;lkj'
+    # app.secret_key = 'M!@#$@#$%#$%alksdjf;lkj'
 
     # 添加 BluePrint
     app.register_blueprint(forecast_blueprint, url_prefix='/forecast')
@@ -24,28 +24,15 @@ def create_app(config_path):
     # reference : http://flask-sqlalchemy.pocoo.org/2.3/contexts/
     app.app_context().push()
     db.init_app(app)
-    mail = Mail(app)                                # Initialize Flask-Mail
-
-    # 迁移到 __init__ 文件
-    # Define the User data model. Make sure to add flask_user UserMixin !!!
-    # class User(db.Model, UserMixin):
-    #     id = db.Column(db.Integer, primary_key=True)
-    #
-    #     # User authentication information
-    #     username = db.Column(db.String(50), nullable=False, unique=True)
-    #     password = db.Column(db.String(255), nullable=False, server_default='')
-    #
-    #     # User email information
-    #     email = db.Column(db.String(255), nullable=False, unique=True)
-    #     confirmed_at = db.Column(db.DateTime())
-    #
-    #     # User information
-    #     active = db.Column('is_active', db.Boolean(), nullable=False, server_default='0')
-    #     first_name = db.Column(db.String(100), nullable=False, server_default='')
-    #     last_name = db.Column(db.String(100), nullable=False, server_default='')
 
     # Create all database tables
     db.create_all()
+
+    mail = Mail(app)                                # Initialize Flask-Mail
+    return app
+
+
+def route(app, db):
 
     # Setup Flask-User
     db_adapter = SQLAlchemyAdapter(db, User)        # Register the User model
@@ -89,6 +76,14 @@ def create_app(config_path):
     return app
 
 
+def create_init():
+    # app_md = create_app('prophet_app.config.ConfigClass_MD', db_md)
+    app = create_app('prophet_app.config.config', db)
+    route(app, db)
+
+    return app
+
+
 if __name__ == '__main__':
-    app = create_app('prophet_app.config.ConfigClass')
+    app = create_init()
     app.run(host='0.0.0.0', debug=True)

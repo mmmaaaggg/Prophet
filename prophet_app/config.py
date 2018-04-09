@@ -17,7 +17,13 @@ from logging.config import dictConfig
 class ConfigClass(object):
     # Flask settings
     SECRET_KEY =              os.getenv('SECRET_KEY',       'THIS IS AN INSECURE SECRET')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',     'sqlite:///basic1_app.sqlite')
+
+    BIND_DB_NAME_MD = 'db_md'
+    # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',     'sqlite:///basic1_app.sqlite')
+    SQLALCHEMY_DATABASE_URI = 'mysql://mg:Abcd1234@localhost/prophet'
+    SQLALCHEMY_BINDS = {
+        BIND_DB_NAME_MD: 'mysql://mg:Abcd1234@localhost/fof_ams_dev'
+    }
     CSRF_ENABLED = True
 
     # Flask-Mail settings
@@ -61,3 +67,5 @@ class ConfigClass(object):
     )
     logging.getLogger('sqlalchemy.engine').setLevel(logging.WARN)
     dictConfig(logging_config)
+
+config = ConfigClass()
