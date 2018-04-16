@@ -1,85 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>预言家</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="author" content="Mosaddek" />
+        <meta name="keyword" content="slick, flat, dashboard, bootstrap, admin, template, theme, responsive, fluid, retina" />
+        <meta name="description" content="" />
+        <link rel="shortcut icon" href="javascript:;" type="image/png">
 
-    <!-- Bootstrap -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <title>预言家</title>
 
-    <!-- In-lining styles to avoid needing a separate .css file -->
-    <style>
-        hr { border-color: #cccccc; margin: 0; }
-        .no-margins { margin: 0px; }
-        .with-margins { margin: 10px; }
-        .col-centered { float: none; margin: 0 auto; }
-    </style>
+        <!--easy pie chart-->
+        <link href="/js/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-    <![endif]-->
-  </head>
+        <!--vector maps -->
+        <link rel="stylesheet" href="/js/vector-map/jquery-jvectormap-1.1.1.css">
 
+        <!--right slidebar-->
+        <link href="/css/slidebars.css" rel="stylesheet">
 
-<body>
-    {% block body %}
-    <div id="header-div" class="clearfix with-margins">
-        <div class="pull-left"><a href="/"><h1 class="no-margins">预言家</h1></a></div>
-        <div class="pull-right">
-            {% if call_or_get(current_user.is_authenticated) %}
-                <a href="{{ url_for('user.profile') }}">{{ current_user.username }}</a>
-                &nbsp; | &nbsp;
-                <a href="{{ url_for('user.logout') }}">Sign out</a>
-            {% else %}
-                <a href="{{ url_for('user.login') }}">Sign in</a>
-            {% endif %}
-        </div>
-    </div>
-    {% block menu %}
-    <div id="menu-div" class="with-margins">
-        <a href="/">Home</a>
-        {% if call_or_get(current_user.is_authenticated) %}
-            &nbsp; | &nbsp; <a href="{{ url_for('user.profile') }}">User profile</a>
-        {% endif %}
-    </div>
-    {% endblock %}
-    <hr class="no-margins"/>
+        <!--switchery-->
+        <link href="/js/switchery/switchery.min.css" rel="stylesheet" type="text/css" media="screen" />
 
-    <div id="main-div" class="with-margins">
-    {# One-time system messages called Flash messages #}
-    {% block flash_messages %}
-        {%- with messages = get_flashed_messages(with_categories=true) -%}
-            {% if messages %}
-                {% for category, message in messages %}
-                    {% if category=='error' %}
-                        {% set category='danger' %}
-                    {% endif %}
-                    <div class="alert alert-{{category}}">{{ message|safe }}</div>
-                {% endfor %}
-            {% endif %}
-        {%- endwith %}
-    {% endblock %}
+        <!--jquery-ui-->
+        <link href="js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet" />
 
-    {% block main %}{% block content %}{% endblock %}{% endblock %}
-    </div>
+        <!--iCheck-->
+        <link href="/js/icheck/skins/all.css" rel="stylesheet">
 
-    <br/>
-    <hr class="no-margins"/>
-    <div id="footer-div" class="clearfix with-margins">
-        <div class="pull-left">Prophet v1.0</div>
-        <div class="pull-right">&copy; 2018 Prophet</div>
-    </div>
-    {% endblock %}
+        <link href="/css/owl.carousel.css" rel="stylesheet">
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  </body>
+        <!--common style-->
+        <link href="/css/style.css" rel="stylesheet">
+        <link href="/css/style-responsive.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="/js/html5shiv.js"></script>
+        <script src="/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+
+    <body class="sticky-header">
+
+        <section>
+            <!-- sidebar left start-->
+            <div class="sidebar-left">
+                <!--responsive view logo start-->
+                <div class="logo dark-logo-bg visible-xs-* visible-sm-*">
+                    <a href="index.html">
+                        <img src="img/logo-icon.png" alt="">
+                        <!--<i class="fa fa-maxcdn"></i>-->
+                        <span class="brand-name">超级预言家</span>
+                    </a>
+                </div>
+                <!--responsive view logo end-->
+
+                <div class="sidebar-left-info">
+                    <!-- visible small devices start-->
+                    <div class=" search-field"></div>
+                    <!-- visible small devices end-->
+
+                    <!--sidebar nav start-->
+                    <ul class="nav nav-pills nav-stacked side-navigation">
+                        <li>
+                            <h3 class="navigation-title">导航</h3>
+                        </li>
+                        <li class="active"><a href="index"><i class="fa fa-home"></i> <span>首页</span></a></li>
+                        <li><a href="{{url_for('forecast.go_prophet')}}"><i class="fa fa-file-text"></i> <span>我要预言</span></a></li>
+                        <li><a href=""><i class="fa fa-book"></i> <span>我的预言</span></a></li>
+                        <li>
+                            <h3 class="navigation-title">相关话题</h3>
+                        </li>
+                        <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>热点预言 <span class="badge noti-arrow bg-success pull-right">3</span> </span></a>
+                        </li>
+
+                        <li class="menu-list"><a href="javascript:;"><i class="fa fa-bar-chart-o"></i> <span>分析预言</span></a>
+                        </li>
+
+                        <li>
+                            <h3 class="navigation-title">其它</h3>
+                        </li>
+
+                        <li class="menu-list"><a href="javascript:;"><i class="fa fa-cogs"></i> <span>设置 <span class="label noti-arrow bg-danger pull-right">4 Unread</span> </span></a>
+                        </li>
+
+                    </ul>
+                    <!--sidebar nav end-->
+
+
+                </div>
+            </div>
+            <!-- sidebar left end-->
+
+            <!-- body content start-->
+            <div class="body-content" >
+
+                <!-- header section start-->
+                <div class="header-section">
+
+                    <!--logo and logo icon start-->
+                    <div class="logo dark-logo-bg hidden-xs hidden-sm">
+                        <a href="index">
+                            <img src="img/logo-icon.png" alt="">
+                            <!--<i class="fa fa-maxcdn"></i>-->
+                            <span class="brand-name">预言家</span>
+                        </a>
+                    </div>
+
+                    <div class="icon-logo dark-logo-bg hidden-xs hidden-sm">
+                        <a href="index">
+                            <img src="img/logo-icon.png" alt="">
+                            <!--<i class="fa fa-maxcdn"></i>-->
+                        </a>
+                    </div>
+                    <!--logo and logo icon end-->
+
+                    <!--toggle button start-->
+                    <a class="toggle-btn"><i class="fa fa-outdent"></i></a>
+                    <!--toggle button end-->
+
+
+                    <div class="notification-wrap">
+
+
+
+                    <!--right notification start-->
+                    <div class="right-notification">
+                        <ul class="notification-menu">
+                            <li>
+                                <form class="search-content" action="index" method="post">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search...">
+                                </form>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    {% if call_or_get(current_user.is_authenticated) %}
+                                    <img src="img/avatar-mini.jpg" alt="">{{ current_user.username }}
+                                    <span class=" fa fa-angle-down"></span>
+                                    {% else %}
+                                    <img src="img/avatar-mini.jpg" alt="">匿名 无名隐士
+                                    <span class=" fa fa-angle-down"></span>
+                                    {% endif %}
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu purple pull-right">
+                                    {% if call_or_get(current_user.is_authenticated) %}
+                                    <li> <a href="{{ url_for('user.profile') }}"><i class="fa fa-cog"></i> Profile</a> </li>
+                                    <li> <a href="{{ url_for('user.logout') }}"><i class="fa fa-sign-out pull-right"></i> Logout</a> </li>
+                                    {% else %}
+                                    <li> <a href="{{ url_for('user.login') }}"><i class="fa fa-user"></i> Sign in</a> </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <!--right notification end-->
+                    </div>
+
+                </div>
+                <!-- header section end-->
+
+                <!--body wrapper start-->
+                <div class="wrapper">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                <!--body wrapper end-->
+
+
+                <!--footer section start-->
+                <footer>
+                    2015 &copy; Prephet by VectorLab.
+                </footer>
+                <!--footer section end-->
+
+            </div>
+            <!-- body content end-->
+        </section>
+
+
+
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+
+    <!--jquery-ui-->
+    <script src="js/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+
+    <script src="js/jquery-migrate.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/modernizr.min.js"></script>
+
+    <!--Nice Scroll-->
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+    <!--switchery-->
+    <script src="js/switchery/switchery.min.js"></script>
+    <script src="js/switchery/switchery-init.js"></script>
+
+    <!--flot chart -->
+    <script src="js/flot-chart/jquery.flot.js"></script>
+    <script src="js/flot-chart/flot-spline.js"></script>
+    <script src="js/flot-chart/jquery.flot.resize.js"></script>
+    <script src="js/flot-chart/jquery.flot.tooltip.min.js"></script>
+    <script src="js/flot-chart/jquery.flot.pie.js"></script>
+    <script src="js/flot-chart/jquery.flot.selection.js"></script>
+    <script src="js/flot-chart/jquery.flot.stack.js"></script>
+    <script src="js/flot-chart/jquery.flot.crosshair.js"></script>
+
+
+    <!--earning chart init-->
+    <script src="js/earning-chart-init.js"></script>
+
+
+    <!--Sparkline Chart-->
+    <script src="js/sparkline/jquery.sparkline.js"></script>
+    <script src="js/sparkline/sparkline-init.js"></script>
+
+    <!--easy pie chart-->
+    <script src="js/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+    <script src="js/easy-pie-chart.js"></script>
+
+
+    <!--vectormap-->
+    <script src="js/vector-map/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="js/vector-map/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="js/dashboard-vmap-init.js"></script>
+
+    <!--Icheck-->
+    <script src="js/icheck/skins/icheck.min.js"></script>
+    <script src="js/todo-init.js"></script>
+
+    <!--jquery countTo-->
+    <script src="js/jquery-countTo/jquery.countTo.js"  type="text/javascript"></script>
+
+    <!--owl carousel-->
+    <script src="js/owl.carousel.js"></script>
+
+
+    <!--common scripts for all pages-->
+
+    <script src="js/scripts.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            //countTo
+
+            $('.timer').countTo();
+
+            //owl carousel
+
+            $("#news-feed").owlCarousel({
+                navigation : true,
+                slideSpeed : 300,
+                paginationSpeed : 400,
+                singleItem : true,
+                autoPlay:true
+            });
+        });
+
+        $(window).on("resize",function(){
+            var owl = $("#news-feed").data("owlCarousel");
+            owl.reinit();
+        });
+
+    </script>
+
+    </body>
 </html>
